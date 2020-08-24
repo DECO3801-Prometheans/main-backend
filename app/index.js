@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const cors = require('koa2-cors');
 const bodyparser = require('koa-bodyparser');
 const error = require('koa-json-error');
 const parameter = require('koa-parameter');
@@ -12,7 +13,8 @@ mongoose.connect(connectionStr, { useNewUrlParser: true }, () => {
     console.log('MongoDB connected successfully');
 });
 mongoose.connection.on('error', console.error);
-// 7 - 6
+
+app.use(cors());
 app.use(error({
     postFormat: (err, { stack, ...rest }) => {
         return process.env.NODE_ENV === 'production'
