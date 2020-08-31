@@ -25,6 +25,10 @@ class UsersController {
                 type: 'string',
                 required: true,
             },
+            type: {
+                type: 'string',
+                required: true,
+            },
             first_name: {
                 type: 'string',
                 required: false,
@@ -42,7 +46,10 @@ class UsersController {
                 required: false,
             }
         });
-        const { email } = ctx.request.body;
+        const { email, type } = ctx.request.body;
+        if(type !== 'farmer' && type !== 'customer') {
+            ctx.throw(409, 'No such user typs!');
+        }
         const repeatedUser = await User.findOne({ email });
         if (repeatedUser) {
             ctx.throw(409, 'This user existed!');
