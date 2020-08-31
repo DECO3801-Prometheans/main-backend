@@ -1,6 +1,8 @@
 class HomeController {
     index(ctx) {
-        ctx.body= 'This is Home Page';
+        ctx.body= {
+            messenge: 'This is our app'
+        };
     }
 }
 

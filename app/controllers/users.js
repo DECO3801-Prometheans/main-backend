@@ -17,17 +17,33 @@ class UsersController {
 
     async create(ctx) {
         ctx.verifyParams({
-            name: {
+            email: {
                 type: 'string',
                 required: true,
             },
             password: {
                 type: 'string',
                 required: true,
+            },
+            first_name: {
+                type: 'string',
+                required: false,
+            },
+            last_name: {
+                type: 'string',
+                required: false,
+            },
+            address: {
+                type: 'string',
+                required: false,
+            },
+            phone: {
+                type: 'string',
+                required: false,
             }
         });
-        const { name } = ctx.request.body;
-        const repeatedUser = await User.findOne({ name });
+        const { email } = ctx.request.body;
+        const repeatedUser = await User.findOne({ email });
         if (repeatedUser) {
             ctx.throw(409, 'This user existed!');
         }
@@ -44,11 +60,27 @@ class UsersController {
 
     async update(ctx) {
         ctx.verifyParams({
-            name: {
+            email: {
                 type: 'string',
                 required: false,
             },
             password: {
+                type: 'string',
+                required: false,
+            },
+            first_name: {
+                type: 'string',
+                required: false,
+            },
+            last_name: {
+                type: 'string',
+                required: false,
+            },
+            address: {
+                type: 'string',
+                required: false,
+            },
+            phone: {
                 type: 'string',
                 required: false,
             }
@@ -70,7 +102,7 @@ class UsersController {
 
     async login(ctx) {
         ctx.verifyParams({
-            name: {
+            email: {
                 type: 'string',
                 required: true,
             },
@@ -83,8 +115,8 @@ class UsersController {
         if(!user) {
             ctx.throw(401, 'User or passowrd are not correct.');
         }
-        const { _id, name } = user;
-        const token = jsonwebtoken.sign({ _id, name }, secret, {expiresIn: '1d'});
+        const { _id, email } = user;
+        const token = jsonwebtoken.sign({ _id, email }, secret, {expiresIn: '1d'});
         ctx.body = { token, _id: _id  };
     }
 }

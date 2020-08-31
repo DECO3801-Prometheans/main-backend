@@ -6,7 +6,7 @@ const userSchema = new Schema({
         type: Number,
         select: false,
     },
-    name: {
+    email: {
         type: String, 
         required: true,
     },
@@ -14,6 +14,18 @@ const userSchema = new Schema({
         type: String,
         required: true,
         select: false,
+    },
+    first_name: {
+        type: String,
+    },
+    last_name: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
+    phone: {
+        type: String,
     }
 });
 
