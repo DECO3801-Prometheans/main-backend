@@ -48,11 +48,11 @@ class UsersController {
         });
         const { email, type } = ctx.request.body;
         if(type !== 'farmer' && type !== 'customer') {
-            ctx.throw(409, 'No such user typs!');
+            ctx.throw(409, 'No such user type!');
         }
         const repeatedUser = await User.findOne({ email });
         if (repeatedUser) {
-            ctx.throw(409, 'This user existed!');
+            ctx.throw(409, 'This email has already been registered!');
         }
         const user = await new User(ctx.request.body).save();
         ctx.body = user;
@@ -120,7 +120,7 @@ class UsersController {
         });
         const user = await User.findOne(ctx.request.body);
         if(!user) {
-            ctx.throw(401, 'User or passowrd are not correct.');
+            ctx.throw(401, 'Email or password are incorrect.');
         }
         const { _id, email } = user;
         const token = jsonwebtoken.sign({ _id, email }, secret, {expiresIn: '1d'});
