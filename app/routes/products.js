@@ -12,3 +12,5 @@ const auth = jwt({ secret });
 router.post('/', auth);
 
 router.get('/:id', auth);
+
+module.exports = router;
