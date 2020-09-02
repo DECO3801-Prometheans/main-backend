@@ -1,4 +1,5 @@
 const Product = require('../models/products');
+const User = require('../models/users');
 
 class ProductsController {
     async create(ctx) {
@@ -27,5 +28,9 @@ class ProductsController {
                 type: 'string',
             }
         });
+        const { type, farmer_id } = ctx.request.body;
+        const farmerExisted = await User.findOne({ _id: farmer_id });
     }
 }
+
+module.exports = new ProductsController();
