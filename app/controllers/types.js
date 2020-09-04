@@ -17,9 +17,13 @@ class TypesController {
                 required: true,
             }
         });
-        const { category } = ctx.request.body;
+        const { category, name } = ctx.request.body;
         if(products_category.indexOf(category) === -1) {
             ctx.throw(409, 'No such category!');
+        }
+        const repeatedType = await Type.findOne({ name });
+        if(repeatedType) {
+            ctx.throw(409, 'This type has already been added!');
         }
         const type = await new Type(ctx.request.body).save();
         ctx.body = type;

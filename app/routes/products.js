@@ -7,8 +7,8 @@ const ProductsController = require('../controllers/products');
 const { secret } = require('../config');
 const auth = jwt({ secret });
 
-router.post('/', auth);
+router.post('/', auth, ProductsController.create);
 
-router.get('/:id', auth);
+router.get('/:id', auth, ProductsController.findById);
 
 module.exports = router;
