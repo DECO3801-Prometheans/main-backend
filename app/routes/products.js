@@ -11,4 +11,6 @@ router.post('/', auth, ProductsController.create);
 
 router.get('/:id', auth, ProductsController.findById);
 
+router.get('/type/:type', ProductsController.findByType);
+
 module.exports = router;

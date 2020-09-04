@@ -50,6 +50,16 @@ class ProductsController {
         }
         ctx.body = product;
     }
+
+    async findByType(ctx) {
+        const type = ctx.params.type;
+        const typeExisted = await Type.findOne({ name: type });
+        if(!typeExisted) {
+            ctx.throw(409, 'No such product types!');
+        }
+        const products = await Product.find({ type });
+        ctx.body = products;
+    }
 }
 
 module.exports = new ProductsController();
