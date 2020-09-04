@@ -29,7 +29,6 @@ class ProductsController {
             }
         });
         const { type, farmer_id } = ctx.request.body;
-        const farmerExisted = await User.findOne({ _id: farmer_id });
     }
 }
 

@@ -5,8 +5,6 @@ const UsersController = require('../controllers/users');
 const ProductsController = require('../controllers/products');
 
 const { secret } = require('../config');
-const { route } = require('./users');
-
 const auth = jwt({ secret });
 
 router.post('/', auth);

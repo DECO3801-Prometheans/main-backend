@@ -15,3 +15,5 @@ const TypeSchema = new Schema({
         required: true,
     }
 });
+
+module.exports = model('Type', TypeSchema);
