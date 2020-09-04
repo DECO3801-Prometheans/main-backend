@@ -27,6 +27,15 @@ class TypesController {
 
     async findByCategory(ctx) {
         const category = ctx.params.category;
+        if(products_category.indexOf(category) === -1) {
+            ctx.throw(409, 'No such category!');
+        }
+        const types = await Type.find({category: category});
+        ctx.body = types;
+    }
+
+    async allCategory(ctx) {
+        ctx.body = products_category;
     }
 }
 

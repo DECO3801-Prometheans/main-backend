@@ -10,6 +10,8 @@ router.post('/', auth, TypesController.create);
 
 router.get('/', auth, TypesController.find);
 
-router.get('/:category', auth, TypesController.findByCategory);
+router.get('/category/:category', auth, TypesController.findByCategory);
+
+router.get('/getAllCategory', auth, TypesController.allCategory);
 
 module.exports = router;
