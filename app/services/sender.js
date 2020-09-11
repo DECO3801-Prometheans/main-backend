@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const { param } = require('../routes/users');
 
 const sender = params => {
     const transporter = nodemailer.createTransport({
@@ -16,7 +17,7 @@ const sender = params => {
         from: '15212219417@163.com',
         to: params.email,
         subject: 'Verify your account!',
-        text: `The code is ${params.code}`
+        text: `Hi, Your code to activate account is ${params.code}`
     };
 
     return new Promise((resolve, reject) => {
