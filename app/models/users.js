@@ -30,6 +30,19 @@ const userSchema = new Schema({
     },
     phone: {
         type: String,
+    },
+    abs: {
+        type: String,
+    },
+    license: {
+        type: String,
+    },
+    activated: {
+        type: Boolean,
+    },
+    verify_code: {
+        type: String,
+        select: false,
     }
 });
 

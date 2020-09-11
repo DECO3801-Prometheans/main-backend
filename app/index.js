@@ -9,6 +9,7 @@ const routing = require('./routes');
 const { connectionStr } = require('./config');
 
 mongoose.set('useUnifiedTopology', true);
+mongoose.set('useFindAndModify', false);
 mongoose.connect(connectionStr, { useNewUrlParser: true }, () => {
     console.log('MongoDB connected successfully');
 });

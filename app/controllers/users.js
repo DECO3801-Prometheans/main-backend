@@ -1,5 +1,7 @@
 const jsonwebtoken = require('jsonwebtoken');
 const User = require('../models/users');
+const random = require('random-string');
+const sender = require('../services/sender');
 const { secret } = require('../config');
 
 class UsersController {
@@ -44,6 +46,14 @@ class UsersController {
             phone: {
                 type: 'string',
                 required: false,
+            },
+            abs: {
+                type: 'string',
+                required: false,
+            },
+            license: {
+                type: 'string',
+                required: false,
             }
         });
         const { email, type } = ctx.request.body;
@@ -54,8 +64,15 @@ class UsersController {
         if (repeatedUser) {
             ctx.throw(409, 'This email has already been registered!');
         }
-        const user = await new User(ctx.request.body).save();
-        ctx.body = user;
+        const user = await new User({
+            ...ctx.request.body,
+            activated: false,
+            verify_code: '',
+        }).save();
+        ctx.body = {
+            id: user._id,
+            messenge: 'registered successfully!',
+        };
     }
 
     async checkOwner(ctx, next) {
@@ -88,6 +105,14 @@ class UsersController {
                 required: false,
             },
             phone: {
+                type: 'string',
+                required: false,
+            },
+            abs: {
+                type: 'string',
+                required: false,
+            },
+            license: {
                 type: 'string',
                 required: false,
             }
@@ -125,6 +150,33 @@ class UsersController {
         const { _id, email } = user;
         const token = jsonwebtoken.sign({ _id, email }, secret, {expiresIn: '1d'});
         ctx.body = { token, _id: _id  };
+    }
+
+    async sendEmail(ctx) {
+        const verify_code = random({ length: 16});
+        const user = await User.findByIdAndUpdate(ctx.params.id, { verify_code });
+        if(!user) {
+            ctx.throw(404, 'User not found');
+        }
+        const result = await sender({
+            email: user.email,
+            code: verify_code,
+        });
+        ctx.body = result;
+    }
+
+    async activateUser(ctx) {
+        const { email, verify_code } = ctx.request.body;
+        const user = await User.findOne({email, verify_code});
+        if(!user) {
+            ctx.throw(401, 'Email or pin are incorrect.');
+        } 
+        const _user = await User.findByIdAndUpdate(user._id, {
+            activated: true,
+        });
+        if(_user) {
+            ctx.body = _user
+        }
     }
 }
 

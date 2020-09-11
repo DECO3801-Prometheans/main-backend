@@ -19,4 +19,8 @@ router.delete('/:id', auth, UsersController.checkOwner, UsersController.delete);
 
 router.post('/login', UsersController.login);
 
+router.get('/sendEmail/:id', UsersController.sendEmail);
+
+router.post('/activateEmail', UsersController.activateUser);
+
 module.exports = router;

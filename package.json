@@ -19,7 +19,9 @@
     "koa-router": "^9.1.0",
     "koa2-cors": "^2.0.6",
     "mongoose": "^5.9.25",
-    "nodemon": "^2.0.4"
+    "nodemailer": "^6.4.11",
+    "nodemon": "^2.0.4",
+    "random-string": "^0.2.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.2"
