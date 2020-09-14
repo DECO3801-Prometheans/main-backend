@@ -21,7 +21,8 @@
     "mongoose": "^5.9.25",
     "nodemailer": "^6.4.11",
     "nodemon": "^2.0.4",
-    "random-string": "^0.2.0"
+    "random-string": "^0.2.0",
+    "randomstring": "^1.1.5"
   },
   "devDependencies": {
     "cross-env": "^7.0.2"
