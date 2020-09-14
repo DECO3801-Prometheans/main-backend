@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const { param } = require('../routes/users');
 
 const sender = params => {
     const transporter = nodemailer.createTransport({
