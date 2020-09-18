@@ -9,13 +9,16 @@ const OrderSchema = new Schema({
     time: {
         type: Date,
         default: Date.now(),
-        required: true,
     },
     products: [],
-    buyer: {
-        type: Object,
+    buyers: [],
+    type: {
+        type: String,
         required: true,
     },
+    note: {
+        type: String,
+    }
 });
 
 module.exports = model('Order', ProductSchema);
