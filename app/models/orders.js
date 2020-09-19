@@ -11,10 +11,12 @@ const OrderSchema = new Schema({
         default: Date.now(),
     },
     products: [],
-    buyers: [],
-    type: {
+    buyer_id: {
         type: String,
         required: true,
+    },
+    group_id: {
+        type: String,
     },
     note: {
         type: String,

@@ -8,8 +8,8 @@ class OrdersController {
                 type: 'array',
                 required: true,
             },
-            buyers: {
-                type: 'array',
+            buyer_id: {
+                type: 'string',
                 required: true,
             },
             type: {
