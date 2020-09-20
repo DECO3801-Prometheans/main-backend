@@ -64,6 +64,20 @@ class OrdersController {
             }
         }
     }
+
+    async findByGroupId(ctx) {
+        const orders = await Order.find({ group_id: ctx.params.id });
+        let flag = false;
+        orders.forEach(order => {
+            if(order.buyer_id === ctx.params.id) {
+                flag = true;
+            }
+        });
+        if(!flag) {
+            ctx.throw(403, "Your can't request this order!");
+        }
+        ctx.body = orders;
+    }
 }
 
 module.exports = new OrdersController();

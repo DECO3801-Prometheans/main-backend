@@ -13,4 +13,6 @@ router.post('/:id', auth, OrdersController.findById);
 
 router.post('/checkGroupID/:id', auth, OrdersController.checkGroupId);
 
+router.post('/groupID/:id', auth, OrdersController.findByGroupId);
+
 module.exports = router;
