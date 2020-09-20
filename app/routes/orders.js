@@ -9,4 +9,8 @@ const auth = jwt({ secret });
 
 router.post('/', auth, OrdersController.create);
 
+router.post('/:id', auth, OrdersController.findById);
+
+router.post('/checkGroupID/:id', auth, OrdersController.checkGroupId);
+
 module.exports = router;

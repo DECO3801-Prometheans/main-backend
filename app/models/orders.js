@@ -15,6 +15,10 @@ const OrderSchema = new Schema({
         type: String,
         required: true,
     },
+    address: {
+        type: String,
+        required: true,
+    },
     group_id: {
         type: String,
     },
@@ -23,4 +27,4 @@ const OrderSchema = new Schema({
     }
 });
 
-module.exports = model('Order', ProductSchema);
+module.exports = model('Order', OrderSchema);

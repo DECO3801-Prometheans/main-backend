@@ -28,6 +28,10 @@ class ProductsController {
             img: {
                 type: 'string',
                 required: false,
+            },
+            description: {
+                type: 'string',
+                required: false,
             }
         });
         const { type, farmer_id } = ctx.request.body;
