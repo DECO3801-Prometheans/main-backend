@@ -12,6 +12,6 @@ router.get('/', auth, TypesController.find);
 
 router.get('/category/:category', TypesController.findByCategory);
 
-router.get('/getAllCategory', auth, TypesController.allCategory);
+router.get('/getAllCategory', TypesController.allCategory);
 
 module.exports = router;
