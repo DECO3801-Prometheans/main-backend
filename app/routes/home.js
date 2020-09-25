@@ -4,6 +4,6 @@ const HomeController = require('../controllers/home');
 
 router.get('/', HomeController.index);
 
-router.post('/upload', HomeController.upload);
+router.post('/upload', HomeController.upload, HomeController.uploadS3);
 
 module.exports = router;

@@ -46,4 +46,5 @@ testem.log
 Thumbs.db
 
 # resources
-/public
+/app/public
+/app/environment.js
