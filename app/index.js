@@ -1,9 +1,10 @@
 const Koa = require('koa');
 const cors = require('koa2-cors');
-const bodyparser = require('koa-bodyparser');
+const koaBody = require('koa-body');
 const error = require('koa-json-error');
 const parameter = require('koa-parameter');
 const mongoose = require('mongoose');
+const path = require('path');
 const app = new Koa();
 const routing = require('./routes');
 const { connectionStr } = require('./config');
@@ -22,7 +23,13 @@ app.use(error({
         ? rest : { stack, ...rest }
     }
 }));
-app.use(bodyparser());
+app.use(koaBody({
+    multipart: true,
+    formidable: {
+        uploadDir: path.join(__dirname, '/public/uploads'),
+        keepExtensions: true,
+    }
+}));
 app.use(parameter(app));
 routing(app);
 
