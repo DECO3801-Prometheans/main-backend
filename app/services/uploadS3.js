@@ -17,7 +17,7 @@ const uploadFile = (fileName, name, type) => {
 
     const params = {
         Bucket: BUCKET_NAME,
-        Key: `/publilc/${name}`,
+        Key: `public/${name}`,
         Body: fileContent,
         ContentType: `image/${type}`
     };
