@@ -1,6 +1,7 @@
 const Product = require('../models/products');
 const User = require('../models/users');
 const Type = require('../models/types');
+const random = require('random-string');
 
 class ProductsController {
     async create(ctx) {
@@ -32,9 +33,13 @@ class ProductsController {
             description: {
                 type: 'string',
                 required: false,
+            },
+            forGroup: {
+                type: 'boolean',
+                required: true,
             }
         });
-        const { type, farmer_id } = ctx.request.body;
+        const { type, farmer_id, forGroup } = ctx.request.body;
         const typeExisted = await Type.findOne({ name: type });
         if(!typeExisted) {
             ctx.throw(409, 'No such product types!');
@@ -43,7 +48,22 @@ class ProductsController {
         if(!farmer || farmer.type !== 'farmer') {
             ctx.throw(409, 'No such farmer!');
         }
-        const product = await new Product(ctx.request.body).save();
+        if(forGroup) {
+            let group_id = random({ length: 20 });
+            while(true) {
+                const _product = await Product.findOne({group_id:group_id});
+                if(!_product) {
+                    break;
+                }
+                group_id = random({ length: 20 });
+            }
+            const product = await new Product({
+                ...ctx.request.body,
+                group_id: group_id
+            }).save();
+        } else {
+            const product = await new Product(ctx.request.body).save();
+        }
         ctx.body = product;
     }
 

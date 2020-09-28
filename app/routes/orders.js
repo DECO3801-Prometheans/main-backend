@@ -15,4 +15,6 @@ router.post('/checkGroupID/:id', auth, OrdersController.checkGroupId);
 
 router.post('/groupID/:id', auth, OrdersController.findByGroupId);
 
+router.patch('/:id', auth, OrdersController.update);
+
 module.exports = router;

@@ -31,6 +31,14 @@ const ProductSchema = new Schema({
     },
     description: {
         type: String,
+    },
+    forGroup: {
+        type: Boolean,
+        required: true,
+    },
+    group_id: {
+        type: String,
+        required: false,
     }
 });
 

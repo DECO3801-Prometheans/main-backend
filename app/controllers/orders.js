@@ -78,6 +78,38 @@ class OrdersController {
         }
         ctx.body = orders;
     }
+
+    async update(ctx) {
+        ctx.verifyParams({
+            products: {
+                type: 'array',
+                required: false,
+            },
+            buyer_id: {
+                type: 'string',
+                required: false,
+            },
+            address: {
+                type: 'string',
+                required: false,
+            },
+            group_id: {
+                type: 'string',
+                required: false,
+            },
+            note: {
+                type: 'string',
+                required: false,
+            }
+        });
+        const { buyer_id } = ctx.request.body;
+        const buyer = await User.findById(buyer_id);
+        if(!buyer) {
+            ctx.throw(409, 'No such user!');
+        }
+        const order = await new Order(ctx.request.body).save();
+        ctx.body = order;
+    }
 }
 
 module.exports = new OrdersController();
