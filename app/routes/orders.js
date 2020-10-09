@@ -7,14 +7,19 @@ const OrdersController = require('../controllers/orders');
 const { secret } = require('../config');
 const auth = jwt({ secret });
 
+// Create order
 router.post('/', auth, OrdersController.create);
 
-router.post('/:id', auth, OrdersController.findById);
+// Get order by id
+router.get('/:id', auth, OrdersController.findById);
 
+// Get orders by group id
 router.post('/checkGroupID/:id', auth, OrdersController.checkGroupId);
 
+// Check whether group id exists
 router.post('/groupID/:id', auth, OrdersController.findByGroupId);
 
+// Update order by id
 router.patch('/:id', auth, OrdersController.update);
 
 module.exports = router;

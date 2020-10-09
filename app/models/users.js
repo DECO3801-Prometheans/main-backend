@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
+/**
+ * The model schema for user
+ * 
+ */
 const userSchema = new Schema({
     __v: {
         type: Number,
@@ -43,7 +47,8 @@ const userSchema = new Schema({
     verify_code: {
         type: String,
         select: false,
-    }
+    },
+    cart: [],
 });
 
 module.exports = model('User', userSchema);

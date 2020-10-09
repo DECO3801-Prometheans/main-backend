@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
+/**
+ * The model schema of product
+ */
 const ProductSchema = new Schema({
     __v: {
         type: Number,

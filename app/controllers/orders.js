@@ -2,6 +2,10 @@ const Order = require('../models/orders');
 const User = require('../models/users');
 
 class OrdersController {
+    /**
+     * Create order
+     * @param {*} ctx 
+     */
     async create(ctx) {
         ctx.verifyParams({
             products: {
@@ -34,14 +38,11 @@ class OrdersController {
         ctx.body = order;
     }
 
+    /**
+     * Find order by id
+     * @param {*} ctx 
+     */
     async findById(ctx) {
-        ctx.verifyParams({
-            id: {
-                type: 'string',
-                required: true,
-            }
-        });
-        const { id } = ctx.request.body;
         const order = await Order.findById(ctx.params.id);
         if(!order) {
             ctx.throw(404, "Order not found!");
@@ -52,6 +53,10 @@ class OrdersController {
         ctx.body = order;
     }
 
+    /**
+     * Check whether group id existed
+     * @param {*} ctx 
+     */
     async checkGroupId(ctx) {
         const order = await Order.findOne({ group_id: ctx.params.id });
         if(!order) {
@@ -65,6 +70,10 @@ class OrdersController {
         }
     }
 
+    /**
+     * Find orders by group id 
+     * @param {*} ctx 
+     */
     async findByGroupId(ctx) {
         const orders = await Order.find({ group_id: ctx.params.id });
         let flag = false;
@@ -78,7 +87,11 @@ class OrdersController {
         }
         ctx.body = orders;
     }
-
+    
+    /**
+     * Update order
+     * @param {*} ctx 
+     */
     async update(ctx) {
         ctx.verifyParams({
             products: {

@@ -5,10 +5,18 @@ const sender = require('../services/sender');
 const { secret } = require('../config');
 
 class UsersController {
+    /**
+     * Find all the users
+     * @param {*} ctx 
+     */
     async find(ctx) {
         ctx.body = await User.find();
     }
 
+    /**
+     * Find a user by id
+     * @param {*} ctx 
+     */
     async findById(ctx) {
         const user = await User.findById(ctx.params.id);
         if(!user) {
@@ -17,6 +25,10 @@ class UsersController {
         ctx.body = user;
     }
 
+    /**
+     * Create a user
+     * @param {*} ctx 
+     */
     async create(ctx) {
         ctx.verifyParams({
             email: {
@@ -54,6 +66,10 @@ class UsersController {
             license: {
                 type: 'string',
                 required: false,
+            },
+            cart: {
+                type: 'array',
+                required: true,
             }
         });
         const { email, type } = ctx.request.body;
@@ -75,6 +91,11 @@ class UsersController {
         };
     }
 
+    /**
+     * Check whether the owner has the privilege
+     * @param {*} ctx 
+     * @param {*} next 
+     */
     async checkOwner(ctx, next) {
         if(ctx.params.id !== ctx.state.user._id) {
             ctx.throw(403, 'No privilege.');
@@ -82,6 +103,10 @@ class UsersController {
         await next();
     }
 
+    /**
+     * Update a user
+     * @param {*} ctx 
+     */
     async update(ctx) {
         ctx.verifyParams({
             email: {
@@ -115,6 +140,10 @@ class UsersController {
             license: {
                 type: 'string',
                 required: false,
+            },
+            cart: {
+                type: 'array',
+                required: false,
             }
         });
         const user = await User.findByIdAndUpdate(ctx.params.id, ctx.request.body);
@@ -124,6 +153,10 @@ class UsersController {
         ctx.body = user;
     }
 
+    /**
+     * Delete a user
+     * @param {*} ctx 
+     */
     async delete(ctx) {
         const user = await User.findByIdAndRemove(ctx.params.id);
         if(!user) {
@@ -132,6 +165,10 @@ class UsersController {
         ctx.status = 204;
     }
 
+    /**
+     * Login
+     * @param {*} ctx 
+     */
     async login(ctx) {
         ctx.verifyParams({
             email: {

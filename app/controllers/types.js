@@ -2,10 +2,18 @@ const Type = require('../models/types');
 const { products_category } = require('../config');
 
 class TypesController {
+    /**
+     * Find all the types
+     * @param {*} ctx 
+     */
     async find(ctx) {
         ctx.body = await Type.find();
     }
 
+    /**
+     * Create a type
+     * @param {*} ctx 
+     */
     async create(ctx) {
         ctx.verifyParams({
             name: {
@@ -29,6 +37,10 @@ class TypesController {
         ctx.body = type;
     }
 
+    /**
+     * Find type by category
+     * @param {*} ctx 
+     */
     async findByCategory(ctx) {
         const category = ctx.params.category;
         if(products_category.indexOf(category) === -1) {
@@ -38,6 +50,10 @@ class TypesController {
         ctx.body = types;
     }
 
+    /**
+     * Get all categories
+     * @param {*} ctx 
+     */
     async allCategory(ctx) {
         ctx.body = products_category;
     }

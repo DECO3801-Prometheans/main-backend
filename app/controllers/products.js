@@ -4,6 +4,10 @@ const Type = require('../models/types');
 const random = require('random-string');
 
 class ProductsController {
+    /**
+     * Crete a product
+     * @param {*} ctx 
+     */
     async create(ctx) {
         ctx.verifyParams({
             name: {
@@ -67,6 +71,10 @@ class ProductsController {
         ctx.body = product;
     }
 
+    /**
+     * Find product by id
+     * @param {*} ctx 
+     */
     async findById(ctx) {
         const product = await Product.findById(ctx.params.id);
         if(!product) {
@@ -75,6 +83,10 @@ class ProductsController {
         ctx.body = product;
     }
 
+    /**
+     * Find products by type
+     * @param {*} ctx 
+     */
     async findByType(ctx) {
         const type = ctx.params.type;
         const typeExisted = await Type.findOne({ name: type });

@@ -8,12 +8,21 @@ class HomeController {
         };
     }
 
+    /**
+     * upload image to local server
+     * @param {*} ctx 
+     * @param {*} next 
+     */
     async upload(ctx, next) {
         const file = ctx.request.files.file;
         ctx.state.uploading = file;
         await next();
     }
 
+    /**
+     * upload image to AWS S3
+     * @param {*} ctx 
+     */
     async uploadS3(ctx) {
         const paths = ctx.state.uploading.path.split('\\');
         const res = await uploadFile(
