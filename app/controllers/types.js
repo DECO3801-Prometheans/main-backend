@@ -26,9 +26,11 @@ class TypesController {
             }
         });
         const { category, name } = ctx.request.body;
+        // Make sure the category exist in system
         if(products_category.indexOf(category) === -1) {
             ctx.throw(409, 'No such category!');
         }
+        // Make sure the type doesn't exist
         const repeatedType = await Type.findOne({ name });
         if(repeatedType) {
             ctx.throw(409, 'This type has already been added!');

@@ -45,13 +45,17 @@ class ProductsController {
         });
         const { type, farmer_id, forGroup } = ctx.request.body;
         const typeExisted = await Type.findOne({ name: type });
+        // Make sure the type existed
         if(!typeExisted) {
             ctx.throw(409, 'No such product types!');
         }
+        // Make sure the farmer existed
         const farmer = await User.findById(farmer_id);
         if(!farmer || farmer.type !== 'farmer') {
             ctx.throw(409, 'No such farmer!');
         }
+        // If the product is for group purchase, system
+        // will give the product a random id for group order
         if(forGroup) {
             let group_id = random({ length: 20 });
             while(true) {
@@ -93,6 +97,7 @@ class ProductsController {
         if(!typeExisted) {
             ctx.throw(409, 'No such product types!');
         }
+        // Find the products by the type given
         const products = await Product.find({ type });
         ctx.body = products;
     }

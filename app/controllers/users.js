@@ -73,13 +73,16 @@ class UsersController {
             }
         });
         const { email, type } = ctx.request.body;
+        // Make sure the type of user should be farmer or customer
         if(type !== 'farmer' && type !== 'customer') {
             ctx.throw(409, 'No such user type!');
         }
+        // Make sure the email never used before
         const repeatedUser = await User.findOne({ email });
         if (repeatedUser) {
             ctx.throw(409, 'This email has already been registered!');
         }
+        // Create the user in database
         const user = await new User({
             ...ctx.request.body,
             activated: false,
@@ -97,9 +100,11 @@ class UsersController {
      * @param {*} next 
      */
     async checkOwner(ctx, next) {
+        // Make sure the id in params matches the JWT
         if(ctx.params.id !== ctx.state.user._id) {
             ctx.throw(403, 'No privilege.');
         }
+        // pass the middleware
         await next();
     }
 
@@ -146,6 +151,7 @@ class UsersController {
                 required: false,
             }
         });
+        // Make sure the user existed in the system
         const user = await User.findByIdAndUpdate(ctx.params.id, ctx.request.body);
         if(!user) {
             ctx.throw(404, 'User not found');
@@ -170,6 +176,7 @@ class UsersController {
      * @param {*} ctx 
      */
     async login(ctx) {
+        // Make sure the request contains email and password
         ctx.verifyParams({
             email: {
                 type: 'string',
@@ -181,20 +188,26 @@ class UsersController {
             }
         });
         const user = await User.findOne(ctx.request.body);
+        // If the user find by the email and password,
+        // the authentication is valid
         if(!user) {
             ctx.throw(401, 'Email or password are incorrect.');
         }
         const { _id, email } = user;
+        // Create JWT by id and email and secret
         const token = jsonwebtoken.sign({ _id, email }, secret, {expiresIn: '1d'});
         ctx.body = { token, _id: _id  };
     }
 
     async sendEmail(ctx) {
+        // Create a verify_code randomly
         const verify_code = random({ length: 16});
+        // Stored the verify_code in user
         const user = await User.findByIdAndUpdate(ctx.params.id, { verify_code });
         if(!user) {
             ctx.throw(404, 'User not found');
         }
+        // Send the email with the verify_code
         const result = await sender({
             email: user.email,
             code: verify_code,
@@ -205,9 +218,11 @@ class UsersController {
     async activateUser(ctx) {
         const { email, verify_code } = ctx.request.body;
         const user = await User.findOne({email, verify_code});
+        // If the user is found, that means the verify_code is correct
         if(!user) {
             ctx.throw(401, 'Email or pin are incorrect.');
         } 
+        // Give the account privilege as it is activated
         const _user = await User.findByIdAndUpdate(user._id, {
             activated: true,
         });

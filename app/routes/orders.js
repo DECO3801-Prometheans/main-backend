@@ -11,7 +11,7 @@ const auth = jwt({ secret });
 router.post('/', auth, OrdersController.create);
 
 // Get order by id
-router.get('/:id', auth, OrdersController.findById);
+router.post('/:id', auth, OrdersController.findById);
 
 // Get orders by group id
 router.post('/checkGroupID/:id', auth, OrdersController.checkGroupId);
