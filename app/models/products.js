@@ -41,7 +41,6 @@ const ProductSchema = new Schema({
     },
     group_id: {
         type: String,
-        required: false,
     }
 });
 
