@@ -70,6 +70,10 @@ class UsersController {
             cart: {
                 type: 'array',
                 required: true,
+            },
+            credit_cards: {
+                type: 'array',
+                required: true,
             }
         });
         const { email, type } = ctx.request.body;
@@ -147,6 +151,10 @@ class UsersController {
                 required: false,
             },
             cart: {
+                type: 'array',
+                required: false,
+            },
+            credit_cards: {
                 type: 'array',
                 required: false,
             }

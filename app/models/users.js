@@ -49,6 +49,7 @@ const userSchema = new Schema({
         select: false,
     },
     cart: [],
+    credit_cards: []
 });
 
 module.exports = model('User', userSchema);
