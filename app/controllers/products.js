@@ -69,10 +69,11 @@ class ProductsController {
                 ...ctx.request.body,
                 group_id: group_id
             }).save();
+            ctx.body = product;
         } else {
             const product = await new Product(ctx.request.body).save();
+            ctx.body = product;
         }
-        ctx.body = product;
     }
 
     /**
