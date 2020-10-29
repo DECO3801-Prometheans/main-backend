@@ -69,11 +69,11 @@ class UsersController {
             },
             cart: {
                 type: 'array',
-                required: true,
+                required: false,
             },
             credit_cards: {
                 type: 'array',
-                required: true,
+                required: false,
             }
         });
         const { email, type } = ctx.request.body;
